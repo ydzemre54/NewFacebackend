@@ -2,7 +2,7 @@
 session_start();
 
 
-require_once '../backend/classes/Produit.php'; // Assure-toi que ce fichier existe
+require_once '../backend/classes/Produit.php'; 
 
 // Initialisation panier si vide
 if (!isset($_SESSION['cart'])) {
