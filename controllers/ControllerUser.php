@@ -24,38 +24,39 @@ class UserController
         }
     }
 
-    public function showLogin() {
+    public function showLogin()
+    {
         $success = isset($_GET['success']) ? "Inscription réussie. Connectez-vous." : null;
-    
+
         include 'views/header.php';
         include 'views/login.php';
         include 'views/footer.php';
     }
-    
+
     public function register($username, $password)
-{
-    $error = null;
+    {
+        $error = null;
 
-    // Expression régulière pour mot de passe fort
-    $regex = '/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){12,}$/';
+        // Expression régulière pour mot de passe fort
+        $regex = '/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){12,}$/';
 
-    if (!preg_match($regex, $password)) {
-        $error = "Mot de passe invalide. Il doit contenir au moins 12 caractères, avec au moins une majuscule, une minuscule, un chiffre, un caractère spécial, et sans espace.";
-    } elseif ($this->model->userExists($username)) {
-        $error = "Nom d'utilisateur déjà pris.";
+        if (!preg_match($regex, $password)) {
+            $error = "Mot de passe invalide. Il doit contenir au moins 12 caractères, avec au moins une majuscule, une minuscule, un chiffre, un caractère spécial, et sans espace.";
+        } elseif ($this->model->userExists($username)) {
+            $error = "Nom d'utilisateur déjà pris.";
+        }
+
+        if ($error) {
+            include 'views/header.php';
+            include 'views/register.php'; // la variable $error est visible dans la vue
+            include 'views/footer.php';
+        } else {
+
+            $this->model->register($username, $password);
+            header("Location: login.php?success=1");
+            exit;
+        }
     }
-
-    if ($error) {
-        include 'views/header.php';
-        include 'views/register.php'; // la variable $error est visible dans la vue
-        include 'views/footer.php';
-    } else {
-        
-        $this->model->register($username, $password);
-        header("Location: login.php?success=1");
-        exit;
-    }
-}
 
 
     public function showRegister()
