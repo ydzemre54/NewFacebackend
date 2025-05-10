@@ -10,7 +10,7 @@ require_once '../backend/controllers/ControllerProduit.php';
 require_once '../backend/controllers/CartController.php';
 require_once '../backend/controllers/ControllerUser.php';
 
-// ROUTAGE TRÈS SIMPLE PAR GET
+// ROUTAGE SIMPLE
 $page = $_GET['page'] ?? 'home';
 $id = $_GET['id'] ?? null;
 
@@ -22,10 +22,6 @@ switch ($page) {
             header("Location: index.php");
         }
         break;
-
-    /*case 'cart':
-        //(new CartController())->showCart();
-        break;*/
 
     default:
         // Page d'accueil : liste de tous les produits
